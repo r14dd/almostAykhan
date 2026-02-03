@@ -1,1 +1,0 @@
-SEED_URLS = ["https://abb-bank.az/"]
