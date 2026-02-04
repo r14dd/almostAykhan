@@ -17,4 +17,4 @@ requests
 beautifulsoup4
 lxml
 
-nltk
+pytest-asyncio
