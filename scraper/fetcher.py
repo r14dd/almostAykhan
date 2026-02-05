@@ -1,5 +1,3 @@
-
-
 import httpx
 
 from .config import *
@@ -25,15 +23,14 @@ async def fetch(_url: str) -> Optional[str]:
             if res.status_code != 200:
                 return None
             
-            c_type = res.headers.get("content-type", "")
-            if "text/html" not in c_type:
-                return None
-            
-            return res.text
+            c_type = res.headers.get("content-type", "").lower()
+            if "text/html" in c_type:
+                return res.text
+
+            return None
         
         except Exception:
             tries = tries + 1
 
 
     return None
-

@@ -46,28 +46,63 @@ def worth_keeping(_text: str):
     Input: text, usually one line
     Output: True if the line of text is worth keeping, False if not
     """
-    return len(_text.strip().split()) >= 3
+    return len(_text.strip().split()) >= 2
+
 
 def extract_clean_lines(_container: Tag):
     """
     Input: container tag
     Output: list of readable text lines
     """
-    relevant_tags: list[Tag] = _container.find_all(["h1", "h2", "h3", "p", "li"])
+    relevant_tags: list[Tag] = _container.find_all(["h1", "h2", "h3", "p", "li", "ul"])
 
     lines: list[str] = []
+    seen: set[str] = set()
 
     for i in relevant_tags:
-        text: str = i.get_text(strip=True)
+        text: str = i.get_text(" ", strip=True)
 
         if not text:
             continue
 
-        if worth_keeping(text):
-            lines.append(text)
+        if not worth_keeping(text):
+            continue
+
+        if text in seen:
+            continue
+
+        seen.add(text)
+        lines.append(text)
 
     return lines
 
 
 
 
+def parse(_html: str):
+    """
+    Input: raw HTML string
+    Output: dict with title, clean_lines, clean_text
+    """
+    soup = BeautifulSoup(_html, "html/text")
+
+    remove_tags(soup)
+
+    container = pick_best_container(soup)
+
+    clean_lines = extract_clean_lines(container)
+
+    clean_text = "\n".join(clean_lines)
+
+    title = None
+    
+    if soup.title and soup.title.string:
+        title = soup.title.string.strip()
+    elif clean_lines:
+        title = clean_lines[0]
+
+    return {
+        "title": title,
+        "clean_lines": clean_lines,
+        "clean_text": clean_text,
+    }
