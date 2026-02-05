@@ -1,17 +1,28 @@
-SEED_URL = "https://abb-bank.az/"
+SEED_URLS = [
+    "https://abb-bank.az/az",
+    "https://abb-bank.az/az/ferdi",
+    "https://abb-bank.az/az/biznes",
+    "https://abb-bank.az/az/kreditler",
+    "https://abb-bank.az/az/kartlar",
+    "https://abb-bank.az/az/emanetler",
+    "https://abb-bank.az/az/haqqimizda",
+]
 
 ALLOWED_DOMAINS = {
     "abb-bank.az",
     "www.abb-bank.az",
 }
-MAX_CRAWL_DEPTH = 5
-MAX_PAGES = 1000
+
+MAX_CRAWL_DEPTH = 4
+MAX_PAGES = 300
+
+
 REQUEST_TIMEOUT = 10
 MAX_RETRIES = 3
+# CRAWL_DELAY_SECONDS = 0.3
 CRAWL_DELAY_SECONDS = 0.5
-
-RAW_OUTPUT = "./output/abb_pages.json"
-CHUNKS_OUTPUT = "./output/abb_chunks.json"
+MIN_CLEAN_TEXT_LEN = 150
+CHUNKS_OUTPUT = "scraper/output/abb_chunks.json"
 
 
 
@@ -22,23 +33,18 @@ ALLOWED_PATH_PREFIXES = (
     "/az",
     "/en",
     "/ru",
+    # "/az/",
+    # "/en/",
+    # "/ru/",
 )
 
 
-# unused for now
 SUPPORTED_LANGUAGES = ("az", "en", "ru")
 
-
-# We dont want all the media, files or auth info
 DISALLOWED_PATH_KEYWORDS = (
-    "/media/",
     "/assets/",
+    "/media/",
     "/uploads/",
-    "/login",
-    "/signin",
-    "/auth",
-    "/search",
-    "/api/"
 )
 
 ALLOWED_CONTENT_TYPES = (
@@ -48,7 +54,6 @@ ALLOWED_CONTENT_TYPES = (
 HEADERS = {
     "User-Agent": "almostAykhan/1.0"
 }
-
 
 
 

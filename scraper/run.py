@@ -1,16 +1,27 @@
-import urllib.parse
 import json
-import datetime
-import time
-import hashlib
-import requests
-import re
-from bs4 import BeautifulSoup
+import asyncio
 
-SEED_URLS = "https://abb-bank.az/"
+from scraper.crawler import crawl
+from scraper.chunker import chunk_page
+from scraper.config import *
 
-res = requests.get(SEED_URLS)
 
-print(res.content)
+async def main():
+    pages = await crawl()
 
-print("status code: " + str(res.status_code))
+    all_chunks: list[dict] = []
+
+    for page in pages:
+        chunks = chunk_page(page)
+        all_chunks.extend(chunks)
+
+    with open(CHUNKS_OUTPUT, "w", encoding="utf-8") as f:
+        json.dump(all_chunks, f, ensure_ascii=False, indent=2)
+
+    print(f"Crawled pages: {len(pages)}")
+    print(f"Generated chunks: {len(all_chunks)}")
+    print(f"Saved output to: {CHUNKS_OUTPUT}")
+
+
+if __name__ == "__main__":
+    asyncio.run(main())

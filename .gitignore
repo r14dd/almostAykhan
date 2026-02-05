@@ -3,3 +3,4 @@
 __pycache__/
 .vscode/
 scraper/output/
+.pytest_cache

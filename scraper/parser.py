@@ -84,7 +84,7 @@ def parse(_html: str):
     Input: raw HTML string
     Output: dict with title, clean_lines, clean_text
     """
-    soup = BeautifulSoup(_html, "html/text")
+    soup = BeautifulSoup(_html, "html.parser")
 
     remove_tags(soup)
 

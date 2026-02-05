@@ -90,4 +90,49 @@ def test_extract_clean_lines():
     assert "Short" not in lines
         
     print("clean lines test passed")
+
+
+from scraper.parser import parse
+
+
+def test_parse_clean_output():
+    html = """
+    <html>
+        <head>
+            <title>ABB Vakansiya</title>
+        </head>
+        <body>
+            <nav>Menu</nav>
+
+            <section>
+                <h1>Join ABB today</h1>
+                <p>Build your future with us.</p>
+                <p>
+                    ABB bank sektorunun ən iri bankı olub,
+                    fərdi və korporativ müştərilərlə birgə,
+                    kiçik və orta sahibkarlığa innovativ 
+                    bankçılıq xidmətləri göstərir.
+                </p>
+            </section>
+
+            <footer>Footer</footer>
+        </body>
+    </html>
+    """
+
+    result = parse(html)
+
+    assert result["title"] == "ABB Vakansiya"
+
+    assert isinstance(result["clean_lines"], list)
+    assert len(result["clean_lines"]) > 0
+
+    assert "Join ABB today" in result["clean_lines"]
+    assert "ABB bank sektorunun ən iri bankı olub" in result["clean_text"]
+
+    assert "Menu" not in result["clean_text"]
+    assert "Footer" not in result["clean_text"]
+
+    print("parse clean output test passed")
+
     
