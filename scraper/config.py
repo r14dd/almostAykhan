@@ -47,9 +47,7 @@ DISALLOWED_PATH_KEYWORDS = (
     "/uploads/",
 )
 
-ALLOWED_CONTENT_TYPES = (
-    "text/html",
-)
+ALLOWED_CONTENT_TYPES = "text/html"
 
 HEADERS = {
     "User-Agent": "almostAykhan/1.0"

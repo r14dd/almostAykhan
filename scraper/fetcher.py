@@ -24,7 +24,7 @@ async def fetch(_url: str) -> Optional[str]:
                 return None
             
             c_type = res.headers.get("content-type", "").lower()
-            if "text/html" in c_type:
+            if ALLOWED_CONTENT_TYPES in c_type:
                 return res.text
 
             return None
