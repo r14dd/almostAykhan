@@ -1,6 +1,12 @@
 .env
+.env.*
 .venv
 __pycache__/
 .vscode/
 scraper/output/
 .pytest_cache
+.DS_Store
+
+backer/data/
+scraper/output/
+*.log
