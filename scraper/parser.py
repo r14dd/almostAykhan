@@ -54,7 +54,7 @@ def extract_clean_lines(_container: Tag):
     Input: container tag
     Output: list of readable text lines
     """
-    relevant_tags: list[Tag] = _container.find_all(["h1", "h2", "h3", "p", "li", "ul"])
+    relevant_tags: list[Tag] = _container.find_all(["h1", "h2", "h3", "p", "li", "ul", "tr", "td", "th", "dl", "dt", "dd"])
 
     lines: list[str] = []
     seen: set[str] = set()
