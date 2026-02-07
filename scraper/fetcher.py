@@ -24,7 +24,13 @@ async def fetch(_url: str) -> Optional[str]:
                 return None
             
             c_type = res.headers.get("content-type", "").lower()
-            if ALLOWED_CONTENT_TYPES in c_type:
+            allowed = False
+            for item in ALLOWED_CONTENT_TYPES:
+                if item in c_type:
+                    allowed = True
+                    break
+
+            if allowed:     
                 return res.text
 
             return None
