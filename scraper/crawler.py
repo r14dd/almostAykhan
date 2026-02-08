@@ -71,35 +71,6 @@ def is_allowed_url(_url: str) -> bool:
 
     return False
 
-async def load_sitemap() -> list:
-    """
-    Input: ()
-    Output: list of urls from sitemap
-    """
-
-    if not SITEMAP_URL:
-        return []
-
-    xml_text = await fetch(SITEMAP_URL)
-    if not xml_text:
-        return []
-
-    soup = BeautifulSoup(xml_text, "xml")
-    urls = []
-
-    for loc in soup.find_all("loc"):
-        raw = loc.text.strip()
-        if not raw:
-            continue
-        norm = normalize_url(raw)
-        if not norm:
-            continue
-        if not is_allowed_url(norm):
-            continue
-        urls.append(norm)
-
-    return urls
-
 def extract_links(_base_url: str, _html: str) -> list[str]:
     """
     Input: base url of the page currently being crawled, raw html str of the page
@@ -137,10 +108,6 @@ async def crawl() -> list[dict]:
     results: list[dict] = []
     queue = deque()
 
-    sitemap_urls = await load_sitemap()
-    for url in sitemap_urls:
-        queue.append((url, 0))
-        
     for url in SEED_URLS:
         queue.append((url, 0)) #tuple for the depthh
 

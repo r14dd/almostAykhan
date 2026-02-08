@@ -6,10 +6,9 @@ SEED_URLS = [
     "https://abb-bank.az/az/ferdi/kartlar",
     "https://abb-bank.az/az/ferdi/emanetler",
     "https://abb-bank.az/az/ferdi/melumat-merkezi",
+    "https://abb-bank.az/az/haqqimizda",
+    "https://destek.abb-bank.az/",
 ]
-
-
-SITEMAP_URL = "https://abb-bank.az/sitemap.xml"
 
 ALLOWED_DOMAINS = {
     "abb-bank.az",
@@ -18,6 +17,7 @@ ALLOWED_DOMAINS = {
     "cb.abb-bank.az",
     "prime.abb-bank.az",
     "bizneskredit.abb-bank.az",
+    "destek.abb-bank.az",
 }
 
 MAX_CRAWL_DEPTH = 5
@@ -28,7 +28,7 @@ REQUEST_TIMEOUT = 10
 MAX_RETRIES = 3
 # CRAWL_DELAY_SECONDS = 0.3
 CRAWL_DELAY_SECONDS = 0.5
-MIN_CLEAN_TEXT_LEN = 80
+MIN_CLEAN_TEXT_LEN = 40
 CHUNKS_OUTPUT = "scraper/output/abb_chunks.json"
 
 
@@ -55,14 +55,11 @@ DISALLOWED_PATH_KEYWORDS = (
 )
 
 ALLOWED_CONTENT_TYPES = (
-    "text/html",
-    "application/xml",
-    "text/xml",
+    "text/html"
 )
 
 HEADERS = {
     "User-Agent": "almostAykhan/1.0"
 }
-
 
 

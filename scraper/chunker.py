@@ -52,7 +52,8 @@ def chunk_page(
     _overlap: int = 100,
 ) -> list[dict]:
     """
-    Convert a parsed page into chunk records.
+    Input: given parsed page dict,
+    Output: a chunk record
     """
     text = _page.get("clean_text", "")
     chunks = split_into_chunks(text, _max_chars, _overlap)
