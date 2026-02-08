@@ -29,6 +29,29 @@ def apply_limit(_data: list, _limit: int) -> list:
         return _data
     return _data[:_limit] 
 
+def validate_chunks(_data: list) -> tuple:
+    """
+    Input: list
+    Output: boolean and validated data or a string error
+    """
+    if not isinstance(_data, list):
+        return False, "chunks must be a list"
+
+    cleaned = []
+    i = 0
+    while i < len(_data):
+        item = _data[i]
+        if isinstance(item, dict):
+            content = item.get("content")
+            if isinstance(content, str) and content.strip():
+                cleaned.append(item)
+        i += 1
+
+    if len(cleaned) == 0:
+        return False, "no valid chunks with non-empty content"
+
+    return True, cleaned
+
 
 def build_texts_and_meta(_data: list) -> tuple:
     """
@@ -43,7 +66,18 @@ def build_texts_and_meta(_data: list) -> tuple:
         content = item.get("content", "").strip()
         if not content:
             continue
-        texts.append(content)
+        title = item.get("title", "").strip()
+        url = item.get("url", "").strip()
+
+        parts = []
+        if title:
+            parts.append("Title: " + title)
+        if url:
+            parts.append("URL: " + url)
+        parts.append(content)
+
+        full_text = "\n".join(parts)
+        texts.append(full_text)
         meta.append(item)
 
     return texts, meta
@@ -106,14 +140,24 @@ def save_metadata(_meta: list, _path: str) -> None:
     )
 
 
-def main():
-    data = load_chunks(CHUNKS_PATH)
-    data = apply_limit(data, EMBED_LIMIT)
+def ingest_chunks(_data: list) -> dict:
+    """
+    Input: list of chunk dicts
+    Output: dict with ingestion summary
+    """
 
-    texts, meta = build_texts_and_meta(data)
+    ok, cleaned = validate_chunks(_data)
+    
+    if not ok:
+        return {"ok": False, "error": cleaned}
+    
+    _data = cleaned
+
+    _data = apply_limit(_data, EMBED_LIMIT)
+
+    texts, meta = build_texts_and_meta(_data)
     if len(texts) == 0:
-        print("No text")
-        return
+        return {"ok": False, "error": "No text"}
 
     vectors = embed_texts(texts)
     index, dim = build_faiss_index(vectors)
@@ -121,11 +165,29 @@ def main():
     save_index(index, FAISS_INDEX_PATH)
     save_metadata(meta, META_PATH)
 
-    print("chunks loaded:", len(data))
-    print("embedded:", len(texts))
-    print("vector dim:", dim)
+    return {
+        "ok": True,
+        "chunks": len(_data),
+        "embedded": len(texts),
+        "dim": dim,
+    }
+
+
+
+def main():
+    data = load_chunks(CHUNKS_PATH)
+    result = ingest_chunks(data)
+
+    if not result.get("ok"):
+        print("no text")
+        return
+
+    print("chunks loaded:", result.get("chunks"))
+    print("embedded:", result.get("embedded"))
+    print("vector dim:", result.get("dim"))
     print("faiss index:", FAISS_INDEX_PATH)
     print("meta file:", META_PATH)
+
 
 
 if __name__ == "__main__":
