@@ -36,6 +36,33 @@ app.mount("/ui", StaticFiles(directory="fronter", html=True), name="ui")
 CACHE = {}
 CACHE_ORDER = []
 CACHE_MAX = 200
+INJECTION_PHRASES = [
+    # Azerbaijani
+    "konteksti ignore et",
+    "konteksti nəzərə alma",
+    "təlimatları ignore et",
+    "təlimatları nəzərə alma",
+    "qaydaları ignore et",
+    "sistem mesajını ignore et",
+    # English
+    "ignore context",
+    "ignore instructions",
+    "ignore previous instructions",
+    "ignore the rules",
+    "system prompt",
+    "developer message",
+    "act as",
+    "jailbreak",
+    "bypass",
+    # Russian
+    "игнорируй контекст",
+    "игнорируй инструкции",
+    "игнорируй предыдущие инструкции",
+    "игнорируй правила",
+    "системный промпт",
+    "сообщение разработчика",
+    "обойди ограничения",
+]
 
 
 class AskRequest(BaseModel):
@@ -173,6 +200,21 @@ def retrieval_is_confident(_chunks: list) -> bool:
     return float(best_distance) <= RETRIEVAL_MAX_DISTANCE
 
 
+def is_injection_attempt(_question: str) -> bool:
+    """
+    Input: question string
+    Output: True if question contains prompt-injection phrases, else False
+    """
+
+    q = _question.strip().lower()
+    i = 0
+    while i < len(INJECTION_PHRASES):
+        if INJECTION_PHRASES[i] in q:
+            return True
+        i += 1
+    return False
+
+
 @app.get("/health")
 def health():
     """
@@ -190,6 +232,15 @@ def ask(_req: AskRequest):
 
     if not question:
         raise HTTPException(status_code=400, detail="Sual tələb olunur.")
+
+    if is_injection_attempt(question):
+        payload = {
+            "answer": "Bunu bilmirəm.",
+            "sources": [],
+        }
+        log_qa(question, payload["answer"], payload["sources"])
+        cache_set(question, payload)
+        return payload
 
     cached = cache_get(question)
     if cached:
