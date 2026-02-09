@@ -8,6 +8,9 @@ SEED_URLS = [
     "https://abb-bank.az/az/ferdi/melumat-merkezi",
     "https://abb-bank.az/az/haqqimizda",
     "https://destek.abb-bank.az/",
+    "https://careers.abb-bank.az/haqqimizda",
+    "https://abb-bank.az/az/ferdi/melumat-merkezi",
+    "https://abb-bank.az/haqqimizda/teklif-ve-iradlar"
 ]
 
 ALLOWED_DOMAINS = {
