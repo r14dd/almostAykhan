@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>almostAykhan | ABB Portalı</title>
+  <link rel="icon" type="image/svg+xml" href="public/almostAykhan.svg">
+  <link rel="icon" type="image/png" href="public/almostAykhan.png">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    .logo {
+      display: inline-block;
+      padding: 0;
+      margin: 0 0 12px 0;
+    }
+
+    .logo img {
+      display: block;
+      height: 82px;
+      width: auto;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Space Grotesk', sans-serif;
+      background-color: #0b4ea2;
+      color: #ffffff;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 850px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .search-section {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    input#questionInput {
+      flex-grow: 1;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      background: #083b7a;
+      color: white;
+    }
+    .upload { margin: 16px 0; }
+    #uploadStatus { margin-top: 6px; font-size: 14px; opacity: 0.9; }
+    #uploadHint { margin-top: 4px; font-size: 12px; opacity: 0.7; }
+
+
+    button#askBtn {
+      padding: 0 24px;
+      border-radius: 8px;
+      border: none;
+      background: white;
+      color: #0b4ea2;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    button#askBtn:hover {
+      opacity: 0.9;
+    }
+
+    #answer {
+      background: #083b7a;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 40px;
+      min-height: 20px;
+      border-left: 4px solid #3de1ff; /* added a smal accent */
+    }
+
+    .chart-container {
+      background: #083b7a;
+      padding: 15px;
+      border-radius: 12px;
+    }
+
+    #status { margin: 6px 0; font-size: 14px; opacity: 0.9; }
+    #samples { margin: 6px 0 16px; font-size: 13px; opacity: 0.8; }
+    #clearBtn { padding: 0 18px; border-radius: 8px; border: 1px solid white; background: transparent; color: white; cursor: pointer; }
+
+  </style>
+</head>
+<body>
+
+  <main class="container">
+    <h1 class="logo">
+      <img src="public/almostAykhan.svg" alt="almostAykhan loqosu" />
+    </h1>
+
+    <div class="upload">
+      <input id="dataFile" type="file" accept=".json" />
+      <div id="uploadStatus">Hələ fayl yüklənməyib.</div>
+      <div id="uploadHint">JSON faylı seçdikdən sonra avtomatik indekslənəcək.</div>
+
+    </div>
+  
+
+    <div class="search-section">
+      <input type="text" id="questionInput" placeholder="ABB haqqında sual verin..." autocomplete="off">
+      <button id="askBtn">Soruş</button>
+      <button id="clearBtn">Təmizlə</button>
+    </div>
+    <div id="status"></div>
+    <div id="samples">
+      Nümunə: ABB mobile təhlükəsizliyi nədir?
+      <br />
+      Nümunə: ABB‑nin poçt ünvanı nədir?
+      <br />
+      Nümunə: ABB‑də nağd kredit necə alınır?
+    </div>
+
+    
+    <div id="answer">Sualınızı daxil edin.</div>
+
+    <section>
+      <h2>Platforma Statistikası (Cəmi: <span id="totalCount">0</span>)</h2>
+      <div class="chart-container">
+        <canvas id="statsChart"></canvas>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
