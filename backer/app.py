@@ -156,6 +156,23 @@ def answer_question(_question: str, _chunks: list) -> str:
     return extract_text(resp).strip()
 
 
+def retrieval_is_confident(_chunks: list) -> bool:
+    """
+    Input: retrieved chunk list
+    Output: True if best retrieval distance is good enough, else False
+    """
+
+    if not _chunks:
+        return False
+
+    first = _chunks[0]
+    best_distance = first.get("distance")
+    if best_distance is None:
+        return False
+
+    return float(best_distance) <= RETRIEVAL_MAX_DISTANCE
+
+
 @app.get("/health")
 def health():
     """
@@ -180,18 +197,25 @@ def ask(_req: AskRequest):
         return cached
 
     chunks = retrieve(question, TOP_K)
-    answer = answer_question(question, chunks)
+
+    confident = retrieval_is_confident(chunks)
+
+    if confident:
+        answer = answer_question(question, chunks)
+    else:
+        answer = "Bunu bilmirəm."
 
     sources = []
-    for item in chunks:
-        source = {
-            "url": item.get("url"),
-            "title": item.get("title"),
-            "content": item.get("content"),
-            "distance": item.get("distance"),
-        }
+    if confident:
+        for item in chunks:
+            source = {
+                "url": item.get("url"),
+                "title": item.get("title"),
+                "content": item.get("content"),
+                "distance": item.get("distance"),
+            }
 
-        sources.append(source)
+            sources.append(source)
 
     log_qa(question, answer, sources)
 
@@ -224,5 +248,3 @@ def ingest(_payload: dict):
     CACHE_ORDER.clear()
 
     return result
-
-
