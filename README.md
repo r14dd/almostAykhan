@@ -27,6 +27,15 @@ A focused RAG system that answers questions **only** from ABB Bank’s public co
 
 ---
 
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#-demo)
+
+## ➤ 🎥 Demo
+<p align="center">
+  <img src="docs/demo.gif" alt="almostAykhan demo" width="100%" />
+</p>
+
+---
+
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#-why-it-stands-out)
 
 ## ➤ ✨ Why it stands out
