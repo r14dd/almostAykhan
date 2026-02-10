@@ -119,7 +119,7 @@ curl -s -X POST http://127.0.0.1:8000/ingest \
 ## ➤ 🔄 Workflow (end to end)
 1) **Scrape**: `python -m scraper.run` → `scraper/output/abb_chunks.json`.
 2) **Ingest**: `POST /ingest` or UI upload → embeds, builds FAISS, saves `backer/data/abb.index`, `abb_meta.json`, clears cache.
-3) **Ask**: UI `Ask` → `app` cache/log → `qa` guardrails → retrieve (FAISS) → distance gate → GPT response → return answer + sources.
+3) **Ask**: UI `Ask` → `app` cache/log → `qa` guardrails → retrieve (FAISS) → distance gate → GPT response → return answer.
 4) **Stats**: `GET /stats` feeds Chart.js questions-per-day graph.
 
 ---
