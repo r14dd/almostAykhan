@@ -159,8 +159,6 @@ curl -s -X POST http://127.0.0.1:8000/ingest \
 
 ---
 
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#-repo-map)
-
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#-env)
 
 ## ➤ 🧩 Env & data
