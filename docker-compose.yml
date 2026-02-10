@@ -1,13 +1,28 @@
 services:
+  qa:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.backer
+    container_name: almostaykhan-qa
+    command: uvicorn qa_service.qa:app --host 0.0.0.0 --port 8001
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+    volumes:
+      - ./backer/data:/app/backer/data
+
   app:
     build:
       context: .
       dockerfile: docker/Dockerfile.backer
     container_name: almostaykhan-app
+    command: uvicorn backer.app:app --host 0.0.0.0 --port 8000
     ports:
       - "8000:8000"
     environment:
       OPENAI_API_KEY: ${OPENAI_API_KEY}
+      QA_SERVICE_URL: http://qa:8001/answer
     volumes:
       - ./backer/data:/app/backer/data
       - ./scraper/output:/app/scraper/output
+    depends_on:
+      - qa

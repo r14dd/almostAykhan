@@ -13,7 +13,7 @@ from backer.config import *
 def load_index(_path: str):
     """
     Input: faiss index file path
-    Output: faiss index
+    Output: faiss index object
     """
 
     return faiss.read_index(_path)

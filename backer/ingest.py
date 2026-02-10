@@ -120,7 +120,7 @@ def build_faiss_index(_vectors: list):
 def save_index(_index: str, _path: str) -> None:
     """
     Input: faiss index to save, output path for the index file
-    Output: None
+    Output: ()
     """
 
     Path(_path).parent.mkdir(parents=True, exist_ok=True)
@@ -130,7 +130,7 @@ def save_index(_index: str, _path: str) -> None:
 def save_metadata(_meta: list, _path: str) -> None:
     """
     Input: list of chunk dicts, output path for metadata JSON file
-    Output: None
+    Output: ()
     """
 
     Path(_path).parent.mkdir(parents=True, exist_ok=True)

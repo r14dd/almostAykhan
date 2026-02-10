@@ -19,7 +19,6 @@ async def fetch(_url: str) -> Optional[str]:
             ) as client:
                 res = await client.get(_url)
 
-            # Failure:
             if res.status_code != 200:
                 return None
             
