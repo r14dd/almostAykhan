@@ -32,7 +32,7 @@ A focused RAG system that answers questions **only** from ABB Bank’s public co
 ## ➤ ✨ Why it stands out
 - **Context-only replies** with injection + distance gates and language-aware prompt.
 - **Pre-scraped data**: deterministic, no live crawl dependency at question time.
-- **Two-process split**: `app` gateway + `qa` retrieval/LLM microservice.
+- **Two-process split**: `app` gateway + `qa` retrieval/LLM service.
 - **Upload-to-ingest**: UI can upload JSON chunks, store in browser, send to backend ingest.
 - **Observability**: questions/answers logged to SQLite, visualized via Chart.js in UI.
 - **Negative + positive black-box suites** to prove guardrails.
