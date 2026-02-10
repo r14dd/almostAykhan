@@ -2,7 +2,6 @@
 
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#-almostaykhan)
 
-# ➤ almostAykhan
 <p align="left"><img src="fronter/public/almostAykhan.svg" alt="almostAykhan logo" width="220" /></p>
 
 ### **ABB Q&A Retrieval-Augmented Assistant**
@@ -60,8 +59,9 @@ A focused RAG system that answers questions **only** from ABB Bank’s public co
   <img src="docs/architecture.png" alt="almostAykhan Architecture" width="100%" />
 </p>
 
-
-Ports (compose): `app:8000`, `qa:8001`.
+<p align="center">
+Architecture diagrams were made with [Eraser](https://app.eraser.io/)!
+</p>
 
 ---
 
