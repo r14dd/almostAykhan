@@ -69,7 +69,8 @@ A focused RAG system that answers questions **only** from ABB Bank’s public co
 </p>
 
 <p align="center">
-Architecture diagrams were made with [Eraser](https://app.eraser.io/)!
+  
+  Architecture diagrams were made with [Eraser](https://app.eraser.io)!
 </p>
 
 ---
